@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { use } from 'react';
 import { NavLink } from 'react-router';
+import {AuthContext} from "../provider/AuthProvider";
 import Logo from '../assets/Logo.png';
 
 const Navbar = () => {
+
+    const{user, logOut}  = use(AuthContext);
+  const handleLogOut = ()=> {
+    logOut().then(()=>{
+      alert("Logged Out!")
+    })
+    .catch(()=>{
+      
+    })
+  };
+
+
     return (
         
             <>
@@ -57,9 +70,33 @@ const Navbar = () => {
         </NavLink>
     </ul>
   </div>
-  <div className="navbar-end">
-    <a className="btn">Button</a>
-  </div>
+  {/* login logout toggle */}
+
+          <div className='flex gap-2 items-center'>
+          {user && (
+          <NavLink to='/profile'>
+          <img src={`${user.photoURL}`} alt="profile photo" className='max-h-15 rounded-full'/>
+        </NavLink>
+          )}
+
+     {
+      user ? 
+       
+        
+        <button onClick={handleLogOut} className='btn btn-info text-white'>LogOut</button> 
+       
+       : 
+       <div className='flex gap-3'>
+        <NavLink to='/login'>
+       <button className='btn btn-info text-white'>LogIn</button>
+      </NavLink>
+
+        <NavLink to='/register'>
+       <button className='btn btn-info text-white'>Register</button>
+      </NavLink>
+       </div>
+     }
+     </div>
 </div>
 
             </>
