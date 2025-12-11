@@ -73,29 +73,36 @@ const Navbar = () => {
   {/* login logout toggle */}
 
           <div className='flex gap-2 items-center navbar-end'>
-          {user && (
-          <NavLink to='/profile'>
-          <img src={`${user.photoURL}`} alt="profile photo" className='max-h-15 rounded-full'/>
-        </NavLink>
-          )}
-
-     {
-      user ? 
-       
-        
-        <button onClick={handleLogOut} className='btn btn-info text-white'>LogOut</button> 
-       
-       : 
-       <div className='flex gap-3'>
-        <NavLink to='/login'>
-       <button className='btn btn-info text-white'>LogIn</button>
-      </NavLink>
-
-        <NavLink to='/register'>
-       <button className='btn btn-info text-white'>Register</button>
-      </NavLink>
-       </div>
-     }
+          {user ? (
+            <div className="flex gap-2 items-center">
+              <div className="dropdown dropdown-end">
+                <div tabIndex={0} role="button" className="btn btn-ghost btn-sm gap-1">
+                  <span className="text-sm font-semibold">{user.displayName}</span>
+                  <svg className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                  <li>
+                    <NavLink to='/dashboard'>Dashboard</NavLink>
+                  </li>
+                  <li>
+                    <a onClick={handleLogOut}>Logout</a>
+                  </li>
+                </ul>
+              </div>
+              <img src={user.photoURL} alt="profile photo" className='h-10 w-10 rounded-full'/>
+            </div>
+          ) : 
+          <div className='flex gap-3'>
+            <NavLink to='/login'>
+              <button className='btn btn-info text-white'>LogIn</button>
+            </NavLink>
+            <NavLink to='/register'>
+              <button className='btn btn-info text-white'>Register</button>
+            </NavLink>
+          </div>
+          }
      </div>
 </div>
 
