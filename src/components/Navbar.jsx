@@ -72,7 +72,7 @@ const Navbar = () => {
   </div>
   {/* login logout toggle */}
 
-          <div className='flex gap-2 items-center'>
+          <div className='flex gap-2 items-center navbar-end'>
           {user && (
           <NavLink to='/profile'>
           <img src={`${user.photoURL}`} alt="profile photo" className='max-h-15 rounded-full'/>
