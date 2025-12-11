@@ -1,8 +1,11 @@
 import React from 'react';
+import { NavLink } from 'react-router';
+import Logo from '../assets/Logo.png';
 
 const Navbar = () => {
     return (
-        <div>
+        
+            <>
             <div className="navbar bg-base-100 shadow-sm">
   <div className="navbar-start">
     <div className="dropdown">
@@ -12,39 +15,55 @@ const Navbar = () => {
       <ul
         tabIndex="-1"
         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-        <li><a>Item 1</a></li>
-        <li>
-          <a>Parent</a>
-          <ul className="p-2">
-            <li><a>Submenu 1</a></li>
-            <li><a>Submenu 2</a></li>
-          </ul>
-        </li>
-        <li><a>Item 3</a></li>
+        
+        <NavLink to="/">
+        <li><a>Home</a></li>
+        </NavLink>
+        <NavLink to="/">
+        <li><a>Tuitions</a></li>
+        </NavLink>
+        <NavLink to="/">
+        <li><a>Tutors</a></li>
+        </NavLink>
+        <NavLink to="/">
+        <li><a>About</a></li>
+        </NavLink>
+        <NavLink to="/">
+        <li><a>Contact</a></li>
+        </NavLink>
       </ul>
     </div>
-    <a className="btn btn-ghost text-xl">daisyUI</a>
+    <NavLink to="/">
+        <img src={Logo} alt="Logo"  className='max-h-30 max-w-30'/>
+    </NavLink>
+    
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
-      <li><a>Item 1</a></li>
-      <li>
-        <details>
-          <summary>Parent</summary>
-          <ul className="p-2 bg-base-100 w-40 z-1">
-            <li><a>Submenu 1</a></li>
-            <li><a>Submenu 2</a></li>
-          </ul>
-        </details>
-      </li>
-      <li><a>Item 3</a></li>
+      <NavLink to="/" >
+        <li><a>Home</a></li>
+        </NavLink>
+        <NavLink to="/" >
+        <li><a>Tuitions</a></li>
+        </NavLink>
+        <NavLink to="/" >
+        <li><a>Tutors</a></li>
+        </NavLink>
+        <NavLink to="/" >
+        <li><a>About</a></li>
+        </NavLink>
+        <NavLink to="/" >
+        <li><a>Contact</a></li>
+        </NavLink>
     </ul>
   </div>
   <div className="navbar-end">
     <a className="btn">Button</a>
   </div>
 </div>
-        </div>
+
+            </>
+        
     );
 };
 
