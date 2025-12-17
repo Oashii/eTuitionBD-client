@@ -23,15 +23,18 @@ const Login = () => {
       const result = await logIn(email, password);
       const user = result.user;
       
-      // Get Firebase token
+      // Get Firebase token (optional - not used for JWT)
       const firebaseToken = await user.getIdToken();
-      localStorage.setItem('token', firebaseToken);
       
-      // Fetch user role from database
-      const response = await fetch('http://localhost:5000/api/auth/me', {
+      // Call backend to get JWT token and user role
+      const response = await fetch('http://localhost:5000/api/auth/firebase-login', {
+        method: 'POST',
         headers: {
-          'Authorization': `Bearer ${firebaseToken}`,
+          'Content-Type': 'application/json',
         },
+        body: JSON.stringify({
+          email: email,
+        }),
       });
       
       if (!response.ok) {
@@ -39,6 +42,10 @@ const Login = () => {
       }
       
       const data = await response.json();
+      
+      // Store JWT token from server
+      localStorage.setItem('token', data.token);
+      
       setUser({ ...user, role: data.user.role });
       
       // Route based on role
