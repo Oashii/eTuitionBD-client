@@ -32,78 +32,103 @@ const Register = () => {
       .then((result) => {
         const user = result.user;
         updateUser({ displayName: name, photoURL: photo })
-          .then(() => {
-            // Save user to MongoDB with role
-            fetch('http://localhost:5000/api/auth/register', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                name,
-                email,
-                password,
-                phone,
-                role: role,
-                profileImage: photo,
-              }),
-            })
-              .then((res) => res.json())
-              .then((data) => {
-                localStorage.setItem('token', data.token);
-                setUser({ 
-                  ...user, 
-                  displayName: name, 
-                  photoURL: photo,
-                  role: role,
+          .then(async () => {
+            try {
+              // Get Firebase token
+              const token = await user.getIdToken();
+              
+              // Save user to MongoDB with role and Firebase token
+              const response = await fetch('http://localhost:5000/api/auth/register', {
+                method: 'POST',
+                headers: { 
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                  name,
+                  email,
+                  password,
                   phone,
-                });
-                alert(`Registered as ${role}!`);
-                navigate("/");
-              })
-              .catch((error) => {
-                console.error('MongoDB registration error:', error);
-                alert('Error saving user to database');
+                  role: role,
+                  profileImage: photo,
+                }),
               });
+              
+              const data = await response.json();
+              
+              if (!response.ok) {
+                throw new Error(data.message || 'Error saving user');
+              }
+              
+              if (data.token) {
+                localStorage.setItem('token', data.token);
+              }
+              
+              setUser({ 
+                ...user, 
+                displayName: name, 
+                photoURL: photo,
+                role: role,
+                phone,
+              });
+              alert(`Registered as ${role}! Welcome!`);
+              navigate("/");
+            } catch (error) {
+              console.error('Error saving user to database:', error);
+              alert(`Registration successful on Firebase, but error saving to database: ${error.message}. You can still login.`);
+              navigate("/login");
+            }
           })
           .catch((error) => {
-            console.error(error);
-            setUser(user);
+            console.error('Error updating user profile:', error);
+            alert('Error updating profile: ' + error.message);
           });
       })
       .catch((error) => {
+        console.error('Firebase registration error:', error);
         alert(`${error.code}: ${error.message}`);
       });
   };
 
-  const handleGoogleSignIn = () => {
-    logInWithGoogle()
-      .then((result) => {
-        const user = result.user;
-        
-        // Save Google user to MongoDB with default Student role
-        fetch('http://localhost:5000/api/auth/google', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name: user.displayName,
-            email: user.email,
-            profileImage: user.photoURL,
-          }),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            localStorage.setItem('token', data.token);
-            setUser({ ...user, role: 'Student' });
-            alert('Registered as Student with Google!');
-            navigate("/");
-          })
-          .catch((error) => {
-            console.error('Google registration error:', error);
-            alert('Error saving user to database');
-          });
-      })
-      .catch((error) => {
-        alert(`${error.code}: ${error.message}`);
+  const handleGoogleSignIn = async () => {
+    try {
+      const result = await logInWithGoogle();
+      const user = result.user;
+      
+      // Get Firebase token
+      const firebaseToken = await user.getIdToken();
+      
+      // Save Google user to MongoDB with default Student role
+      const response = await fetch('http://localhost:5000/api/auth/google', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${firebaseToken}`,
+        },
+        body: JSON.stringify({
+          name: user.displayName,
+          email: user.email,
+          profileImage: user.photoURL,
+        }),
       });
+      
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.message || 'Error saving user');
+      }
+      
+      if (data.token) {
+        localStorage.setItem('token', data.token);
+      }
+      
+      setUser({ ...user, role: 'Student' });
+      alert('Registered as Student with Google!');
+      navigate('/student-dashboard/my-tuitions');
+    } catch (error) {
+      console.error('Google registration error:', error);
+      alert('Error: ' + error.message);
+    }
   };
 
   return (

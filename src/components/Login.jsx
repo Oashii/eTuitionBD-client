@@ -12,77 +12,89 @@ const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const handleLogIn = (e) => {
+  const handleLogIn = async (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
 
-    // Login with Firebase
-    logIn(email, password)
-      .then((result) => {
-        const user = result.user;
-        
-        // Fetch user role from database
-        fetch('http://localhost:5000/api/auth/current-user', {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
-          },
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            setUser({ ...user, role: data.user.role });
-            
-            // Route based on role
-            if (data.user.role === 'Admin') {
-              navigate('/admin-dashboard/users');
-            } else if (data.user.role === 'Tutor') {
-              navigate('/tutor-dashboard/my-applications');
-            } else {
-              navigate('/student-dashboard/my-tuitions');
-            }
-          })
-          .catch((error) => {
-            console.error('Error fetching user role:', error);
-            navigate(location.state ? location.state : "/");
-          });
-      })
-      .catch((error) => {
-        alert(`${error.code}: ${error.message}`);
+    try {
+      // Login with Firebase
+      const result = await logIn(email, password);
+      const user = result.user;
+      
+      // Get Firebase token
+      const firebaseToken = await user.getIdToken();
+      localStorage.setItem('token', firebaseToken);
+      
+      // Fetch user role from database
+      const response = await fetch('http://localhost:5000/api/auth/current-user', {
+        headers: {
+          'Authorization': `Bearer ${firebaseToken}`,
+        },
       });
+      
+      if (!response.ok) {
+        throw new Error('Error fetching user role');
+      }
+      
+      const data = await response.json();
+      setUser({ ...user, role: data.user.role });
+      
+      // Route based on role
+      if (data.user.role === 'Admin') {
+        navigate('/admin-dashboard/users');
+      } else if (data.user.role === 'Tutor') {
+        navigate('/tutor-dashboard/my-applications');
+      } else {
+        navigate('/student-dashboard/my-tuitions');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      alert(`Login failed: ${error.message}`);
+    }
   };
 
-  const handleGoogleLogin = () => {
-    logInWithGoogle()
-      .then((result) => {
-        const user = result.user;
-        
-        // Save/verify Google user and get role
-        fetch('http://localhost:5000/api/auth/google', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name: user.displayName,
-            email: user.email,
-            profileImage: user.photoURL,
-          }),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            localStorage.setItem('token', data.token);
-            setUser({ ...user, role: 'Student' });
-            alert('Logged in as Student with Google!');
-            // Google users default to Student role
-            navigate('/student-dashboard/my-tuitions');
-          })
-          .catch((error) => {
-            console.error('Google login error:', error);
-            alert('Error logging in with Google');
-          });
-      })
-      .catch((error) => {
-        alert(`${error.code}: ${error.message}`);
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await logInWithGoogle();
+      const user = result.user;
+      
+      // Get Firebase token
+      const firebaseToken = await user.getIdToken();
+      
+      // Save/verify Google user and get role
+      const response = await fetch('http://localhost:5000/api/auth/google', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${firebaseToken}`,
+        },
+        body: JSON.stringify({
+          name: user.displayName,
+          email: user.email,
+          profileImage: user.photoURL,
+        }),
       });
+      
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.message || 'Error logging in');
+      }
+      
+      if (data.token) {
+        localStorage.setItem('token', data.token);
+      }
+      
+      setUser({ ...user, role: 'Student' });
+      alert('Logged in as Student with Google!');
+      // Google users default to Student role
+      navigate('/student-dashboard/my-tuitions');
+    } catch (error) {
+      console.error('Google login error:', error);
+      alert('Error: ' + error.message);
+    }
   };
 
   return (
