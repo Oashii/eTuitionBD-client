@@ -31,6 +31,8 @@ import UserManagement from './components/Dashboard/UserManagement.jsx'
 import TuitionManagement from './components/Dashboard/TuitionManagement.jsx'
 import AdminAnalytics from './components/Dashboard/AdminAnalytics.jsx'
 import PrivateRoute from './provider/PrivateRoute.jsx'
+import EditTuition from './components/Dashboard/EditTuition.jsx'
+import Checkout from './components/Checkout.jsx'
 
 const router = createBrowserRouter([
   {
@@ -65,6 +67,14 @@ const router = createBrowserRouter([
       {
         path: '/tuition/:id',
         element: <TuitionDetail />,
+      },
+      {
+        path: '/edit-tuition/:id',
+        element: <PrivateRoute><EditTuition /></PrivateRoute>,
+      },
+      {
+        path: '/checkout/:applicationId',
+        element: <PrivateRoute><Checkout /></PrivateRoute>,
       },
       {
         path: '/tutors',

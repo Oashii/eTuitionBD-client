@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../provider/AuthProvider';
 
 const AppliedTutors = () => {
     const { user } = useContext(AuthContext);
+    const navigate = useNavigate();
     const [tuitions, setTuitions] = useState([]);
     const [selectedTuition, setSelectedTuition] = useState(null);
     const [applications, setApplications] = useState([]);
@@ -53,24 +54,30 @@ const AppliedTutors = () => {
     }, [selectedTuition]);
 
     const handleStatusChange = async (applicationId, newStatus) => {
-        try {
-            await axios.patch(
-                `http://localhost:5000/api/applications/${applicationId}`,
-                { status: newStatus },
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('token')}`,
-                    },
-                }
-            );
-            setApplications(
-                applications.map((app) =>
-                    app._id === applicationId ? { ...app, status: newStatus } : app
-                )
-            );
-            alert(`Application ${newStatus.toLowerCase()} successfully!`);
-        } catch (error) {
-            alert('Error updating application');
+        if (newStatus === 'Approved') {
+            // Redirect to checkout page instead of immediately approving
+            navigate(`/checkout/${applicationId}`);
+        } else {
+            // Reject application directly
+            try {
+                await axios.patch(
+                    `http://localhost:5000/api/applications/${applicationId}`,
+                    { status: newStatus },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('token')}`,
+                        },
+                    }
+                );
+                setApplications(
+                    applications.map((app) =>
+                        app._id === applicationId ? { ...app, status: newStatus } : app
+                    )
+                );
+                alert(`Application ${newStatus.toLowerCase()} successfully!`);
+            } catch (error) {
+                alert('Error updating application');
+            }
         }
     };
 

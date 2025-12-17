@@ -67,6 +67,12 @@ const MyTuitions = () => {
                                 >
                                     View
                                 </Link>
+                                <Link
+                                    to={`/edit-tuition/${tuition._id}`}
+                                    className="btn btn-sm btn-info"
+                                >
+                                    Edit
+                                </Link>
                                 <button
                                     onClick={() => handleDelete(tuition._id)}
                                     className="btn btn-sm btn-error"
