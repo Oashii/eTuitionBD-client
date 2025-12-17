@@ -88,23 +88,27 @@ const router = createBrowserRouter([
         element: <PrivateRoute><StudentDashboard /></PrivateRoute>,
         children: [
           {
-            path: '/student-dashboard/my-tuitions',
+            index: true,
             element: <MyTuitions />,
           },
           {
-            path: '/student-dashboard/post-tuition',
+            path: 'my-tuitions',
+            element: <MyTuitions />,
+          },
+          {
+            path: 'post-tuition',
             element: <PostTuition />,
           },
           {
-            path: '/student-dashboard/applied-tutors',
+            path: 'applied-tutors',
             element: <AppliedTutors />,
           },
           {
-            path: '/student-dashboard/payments',
+            path: 'payments',
             element: <StudentPayments />,
           },
           {
-            path: '/student-dashboard/settings',
+            path: 'settings',
             element: <StudentSettings />,
           },
         ],
@@ -115,15 +119,19 @@ const router = createBrowserRouter([
         element: <PrivateRoute><TutorDashboard /></PrivateRoute>,
         children: [
           {
-            path: '/tutor-dashboard/my-applications',
+            index: true,
             element: <MyApplications />,
           },
           {
-            path: '/tutor-dashboard/ongoing-tuitions',
+            path: 'my-applications',
+            element: <MyApplications />,
+          },
+          {
+            path: 'ongoing-tuitions',
             element: <OngoingTuitions />,
           },
           {
-            path: '/tutor-dashboard/revenue',
+            path: 'revenue',
             element: <TutorRevenue />,
           },
         ],
@@ -134,15 +142,19 @@ const router = createBrowserRouter([
         element: <PrivateRoute><AdminDashboard /></PrivateRoute>,
         children: [
           {
-            path: '/admin-dashboard/users',
+            index: true,
             element: <UserManagement />,
           },
           {
-            path: '/admin-dashboard/tuitions',
+            path: 'users',
+            element: <UserManagement />,
+          },
+          {
+            path: 'tuitions',
             element: <TuitionManagement />,
           },
           {
-            path: '/admin-dashboard/analytics',
+            path: 'analytics',
             element: <AdminAnalytics />,
           },
         ],
