@@ -36,9 +36,10 @@ const Register = () => {
             try {
               // Get Firebase token
               const token = await user.getIdToken();
+              localStorage.setItem('token', token);
               
-              // Save user to MongoDB with role and Firebase token
-              const response = await fetch('http://localhost:5000/api/auth/register', {
+              // Save user profile to MongoDB via save-profile endpoint
+              const response = await fetch('http://localhost:5000/api/auth/save-profile', {
                 method: 'POST',
                 headers: { 
                   'Content-Type': 'application/json',
@@ -47,7 +48,6 @@ const Register = () => {
                 body: JSON.stringify({
                   name,
                   email,
-                  password,
                   phone,
                   role: role,
                   profileImage: photo,
@@ -57,11 +57,7 @@ const Register = () => {
               const data = await response.json();
               
               if (!response.ok) {
-                throw new Error(data.message || 'Error saving user');
-              }
-              
-              if (data.token) {
-                localStorage.setItem('token', data.token);
+                throw new Error(data.message || 'Error saving profile');
               }
               
               setUser({ 
@@ -72,10 +68,16 @@ const Register = () => {
                 phone,
               });
               alert(`Registered as ${role}! Welcome!`);
-              navigate("/");
+              
+              // Route based on role
+              if (role === 'Tutor') {
+                navigate('/tutor-dashboard/my-applications');
+              } else {
+                navigate('/student-dashboard/my-tuitions');
+              }
             } catch (error) {
-              console.error('Error saving user to database:', error);
-              alert(`Registration successful on Firebase, but error saving to database: ${error.message}. You can still login.`);
+              console.error('Error saving profile to database:', error);
+              alert(`Registration successful! You can now login.`);
               navigate("/login");
             }
           })
@@ -97,9 +99,10 @@ const Register = () => {
       
       // Get Firebase token
       const firebaseToken = await user.getIdToken();
+      localStorage.setItem('token', firebaseToken);
       
       // Save Google user to MongoDB with default Student role
-      const response = await fetch('http://localhost:5000/api/auth/google', {
+      const response = await fetch('http://localhost:5000/api/auth/save-profile', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -109,6 +112,8 @@ const Register = () => {
           name: user.displayName,
           email: user.email,
           profileImage: user.photoURL,
+          role: 'Student',
+          phone: '',
         }),
       });
       
@@ -116,10 +121,6 @@ const Register = () => {
       
       if (!response.ok) {
         throw new Error(data.message || 'Error saving user');
-      }
-      
-      if (data.token) {
-        localStorage.setItem('token', data.token);
       }
       
       setUser({ ...user, role: 'Student' });

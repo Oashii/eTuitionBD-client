@@ -28,7 +28,7 @@ const Login = () => {
       localStorage.setItem('token', firebaseToken);
       
       // Fetch user role from database
-      const response = await fetch('http://localhost:5000/api/auth/current-user', {
+      const response = await fetch('http://localhost:5000/api/auth/me', {
         headers: {
           'Authorization': `Bearer ${firebaseToken}`,
         },
@@ -62,9 +62,10 @@ const Login = () => {
       
       // Get Firebase token
       const firebaseToken = await user.getIdToken();
+      localStorage.setItem('token', firebaseToken);
       
-      // Save/verify Google user and get role
-      const response = await fetch('http://localhost:5000/api/auth/google', {
+      // Ensure user profile exists in MongoDB
+      const response = await fetch('http://localhost:5000/api/auth/save-profile', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -74,6 +75,8 @@ const Login = () => {
           name: user.displayName,
           email: user.email,
           profileImage: user.photoURL,
+          role: 'Student',
+          phone: '',
         }),
       });
       
@@ -81,10 +84,6 @@ const Login = () => {
       
       if (!response.ok) {
         throw new Error(data.message || 'Error logging in');
-      }
-      
-      if (data.token) {
-        localStorage.setItem('token', data.token);
       }
       
       setUser({ ...user, role: 'Student' });
