@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../provider/AuthProvider';
+import { AuthContext } from '../provider/AuthProvider';
 
 const Checkout = () => {
     const { applicationId } = useParams();
