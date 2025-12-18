@@ -24,8 +24,9 @@ const Navbar = () => {
     }
   };
 
-  const closeDropdown = (e) => {
-    e.currentTarget.closest('.dropdown')?.querySelector('[role="button"]')?.blur();
+  const closeDropdown = () => {
+    // Blur the currently focused element (the dropdown trigger)
+    document.activeElement.blur();
   };
 
   return (
@@ -73,9 +74,9 @@ const Navbar = () => {
                   </svg>
                 </div>
                 <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                  <li><NavLink to='/profile' onClick={closeDropdown}>Profile</NavLink></li>
-                  <li><NavLink to={getDashboardLink()} onClick={closeDropdown}>Dashboard</NavLink></li>
-                  <li><a onClick={(e) => { closeDropdown(e); handleLogOut(); }}>Logout</a></li>
+                  <li><a onClick={closeDropdown}><NavLink to='/profile'>Profile</NavLink></a></li>
+                  <li><a onClick={closeDropdown}><NavLink to={getDashboardLink()}>Dashboard</NavLink></a></li>
+                  <li><a onClick={() => { closeDropdown(); handleLogOut(); }}>Logout</a></li>
                 </ul>
               </div>
               {user?.photoURL && (
