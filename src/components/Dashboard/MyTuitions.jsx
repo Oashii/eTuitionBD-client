@@ -58,7 +58,7 @@ const MyTuitions = () => {
                                 <p><strong>Class:</strong> {tuition.class}</p>
                                 <p><strong>Location:</strong> {tuition.location}</p>
                                 <p><strong>Budget:</strong> ৳{tuition.budget}</p>
-                                <p><strong>Status:</strong> <span className="badge badge-info">{tuition.status}</span></p>
+                                <p><strong>Status:</strong> <span className="badge badge-info">{tuition.status === 'Approved' ? 'Available' : tuition.status}</span></p>
                             </div>
                             <div className="flex gap-3">
                                 <Link

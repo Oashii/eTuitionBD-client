@@ -96,7 +96,7 @@ const TuitionDetail = () => {
                         </div>
                         <div>
                             <p className="text-gray-600 mb-2"><strong>Budget:</strong> ৳{tuition.budget}</p>
-                            <p className="text-gray-600 mb-2"><strong>Status:</strong> <span className="badge badge-success">{tuition.status}</span></p>
+                            <p className="text-gray-600 mb-2"><strong>Status:</strong> <span className="badge badge-success">{tuition.status === 'Approved' ? 'Available' : tuition.status}</span></p>
                             <p className="text-gray-600 mb-2"><strong>Posted:</strong> {new Date(tuition.createdAt).toLocaleDateString()}</p>
                         </div>
                     </div>

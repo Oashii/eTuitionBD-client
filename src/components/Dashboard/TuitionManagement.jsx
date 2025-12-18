@@ -89,7 +89,7 @@ const TuitionManagement = () => {
                                     tuition.status === 'Rejected' ? 'badge-error' :
                                     'badge-warning'
                                 }`}>
-                                    {tuition.status}
+                                    {tuition.status === 'Approved' ? 'Available' : tuition.status}
                                 </span>
                             </div>
 
