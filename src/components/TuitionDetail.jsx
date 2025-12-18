@@ -155,10 +155,9 @@ const TuitionDetail = () => {
                         <p className="text-sm text-gray-600 mb-6">Fill in your details to apply for this tuition position</p>
                         <form onSubmit={handleApply}>
                             <div className="grid grid-cols-1 gap-6">
-                                <div className="form-control">
-                                    <label className="label">
-                                        <span className="label-text font-semibold">Expected Salary (Monthly)</span>
-                                    </label>
+                                {/* Expected Salary */}
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Expected Salary (Monthly)</label>
                                     <div className="relative">
                                         <span className="absolute left-3 top-3 text-gray-500">৳</span>
                                         <input
@@ -172,36 +171,30 @@ const TuitionDetail = () => {
                                     </div>
                                 </div>
 
-                                <div className="form-control">
-                                    <label className="label">
-                                        <span className="label-text font-semibold">Qualifications</span>
-                                    </label>
+                                {/* Qualifications */}
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Qualifications</label>
                                     <textarea
-                                        className="textarea textarea-bordered h-28"
+                                        className="textarea textarea-bordered w-full h-28"
                                         placeholder="e.g., Bachelor's in Mathematics, HSC in Science..."
                                         value={formData.qualifications}
                                         onChange={(e) => setFormData({ ...formData, qualifications: e.target.value })}
                                         required
                                     ></textarea>
-                                    <label className="label">
-                                        <span className="label-text-alt text-gray-500">Share your educational background and certifications</span>
-                                    </label>
+                                    <p className="text-xs text-gray-500 mt-1">Share your educational background and certifications</p>
                                 </div>
 
-                                <div className="form-control">
-                                    <label className="label">
-                                        <span className="label-text font-semibold">Teaching Experience</span>
-                                    </label>
+                                {/* Teaching Experience */}
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Teaching Experience</label>
                                     <textarea
-                                        className="textarea textarea-bordered h-28"
+                                        className="textarea textarea-bordered w-full h-28"
                                         placeholder="e.g., 5 years teaching experience at XYZ school..."
                                         value={formData.experience}
                                         onChange={(e) => setFormData({ ...formData, experience: e.target.value })}
                                         required
                                     ></textarea>
-                                    <label className="label">
-                                        <span className="label-text-alt text-gray-500">Describe your teaching experience and achievements</span>
-                                    </label>
+                                    <p className="text-xs text-gray-500 mt-1">Describe your teaching experience and achievements</p>
                                 </div>
                             </div>
 
