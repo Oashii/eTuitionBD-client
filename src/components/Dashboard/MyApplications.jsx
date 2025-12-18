@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../provider/AuthProvider';
+import { toast } from 'react-toastify';
+import ConfirmDialog from '../ConfirmDialog';
 
 const MyApplications = () => {
     useEffect(() => {
@@ -15,6 +17,7 @@ const MyApplications = () => {
         experience: '',
         expectedSalary: '',
     });
+    const [deleteConfirm, setDeleteConfirm] = useState({ isOpen: false, applicationId: null });
 
     useEffect(() => {
         const fetchApplications = async () => {
@@ -35,18 +38,23 @@ const MyApplications = () => {
     }, []);
 
     const handleDelete = async (id) => {
-        if (window.confirm('Are you sure you want to delete this application?')) {
-            try {
-                await axios.delete(`http://localhost:5000/api/applications/${id}`, {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('token')}`,
-                    },
-                });
-                setApplications(applications.filter((app) => app._id !== id));
-                alert('Application deleted successfully');
-            } catch (error) {
-                alert(error.response?.data?.message || 'Error deleting application');
-            }
+        setDeleteConfirm({ isOpen: true, applicationId: id });
+    };
+
+    const confirmDelete = async () => {
+        const id = deleteConfirm.applicationId;
+        try {
+            await axios.delete(`http://localhost:5000/api/applications/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
+            setApplications(applications.filter((app) => app._id !== id));
+            toast.success('Application deleted successfully');
+            setDeleteConfirm({ isOpen: false, applicationId: null });
+        } catch (error) {
+            toast.error(error.response?.data?.message || 'Error deleting application');
+            setDeleteConfirm({ isOpen: false, applicationId: null });
         }
     };
 
@@ -227,6 +235,16 @@ const MyApplications = () => {
                     <p className="text-gray-500 text-lg">No applications yet</p>
                 </div>
             )}
+            <ConfirmDialog
+                isOpen={deleteConfirm.isOpen}
+                title="Delete Application"
+                message="Are you sure you want to delete this application? This action cannot be undone."
+                confirmText="Delete"
+                cancelText="Cancel"
+                isDangerous={true}
+                onConfirm={confirmDelete}
+                onCancel={() => setDeleteConfirm({ isOpen: false, applicationId: null })}
+            />
         </div>
     );
 };

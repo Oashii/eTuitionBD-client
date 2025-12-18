@@ -2,6 +2,8 @@ import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../provider/AuthProvider';
+import { toast } from 'react-toastify';
+import ConfirmDialog from '../ConfirmDialog';
 
 const MyTuitions = () => {
     useEffect(() => {
@@ -10,6 +12,7 @@ const MyTuitions = () => {
     const { user } = useContext(AuthContext);
     const [tuitions, setTuitions] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [deleteConfirm, setDeleteConfirm] = useState({ isOpen: false, tuitionId: null });
 
     useEffect(() => {
         const fetchTuitions = async () => {
@@ -30,18 +33,23 @@ const MyTuitions = () => {
     }, []);
 
     const handleDelete = async (id) => {
-        if (window.confirm('Are you sure you want to delete this tuition?')) {
-            try {
-                await axios.delete(`http://localhost:5000/api/tuitions/${id}`, {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('token')}`,
-                    },
-                });
-                setTuitions(tuitions.filter((t) => t._id !== id));
-                alert('Tuition deleted successfully');
-            } catch (error) {
-                alert('Error deleting tuition');
-            }
+        setDeleteConfirm({ isOpen: true, tuitionId: id });
+    };
+
+    const confirmDelete = async () => {
+        const id = deleteConfirm.tuitionId;
+        try {
+            await axios.delete(`http://localhost:5000/api/tuitions/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
+            setTuitions(tuitions.filter((t) => t._id !== id));
+            toast.success('Tuition deleted successfully');
+            setDeleteConfirm({ isOpen: false, tuitionId: null });
+        } catch (error) {
+            toast.error('Error deleting tuition');
+            setDeleteConfirm({ isOpen: false, tuitionId: null });
         }
     };
 
@@ -94,6 +102,16 @@ const MyTuitions = () => {
                     </Link>
                 </div>
             )}
+            <ConfirmDialog
+                isOpen={deleteConfirm.isOpen}
+                title="Delete Tuition"
+                message="Are you sure you want to delete this tuition? This action cannot be undone."
+                confirmText="Delete"
+                cancelText="Cancel"
+                isDangerous={true}
+                onConfirm={confirmDelete}
+                onCancel={() => setDeleteConfirm({ isOpen: false, tuitionId: null })}
+            />
         </div>
     );
 };
