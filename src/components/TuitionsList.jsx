@@ -3,6 +3,9 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 const TuitionsList = () => {
+    useEffect(() => {
+    document.title = 'eTuitionBD - Tuitions List';
+  }, []);
     const [tuitions, setTuitions] = useState([]);
     const [loading, setLoading] = useState(true);
     const [page, setPage] = useState(1);

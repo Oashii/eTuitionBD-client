@@ -1,8 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect} from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { AuthContext } from '../../provider/AuthProvider';
 
 const TutorDashboard = () => {
+    useEffect(() => {
+    document.title = 'eTuitionBD - Tutor Dashboard';
+  }, []);
     const { user } = useContext(AuthContext);
     const location = useLocation();
     const [sidebarOpen, setSidebarOpen] = useState(true);

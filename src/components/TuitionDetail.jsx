@@ -4,6 +4,9 @@ import axios from 'axios';
 import { AuthContext } from '../provider/AuthProvider';
 
 const TuitionDetail = () => {
+    useEffect(() => {
+    document.title = 'eTuitionBD - Tuition Detail';
+  }, []);
     const { id } = useParams();
     const navigate = useNavigate();
     const { user } = useContext(AuthContext);

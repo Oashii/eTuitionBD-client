@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect }from 'react';
 import { Link } from 'react-router-dom';
 
 const About = () => {
+    useEffect(() => {
+    document.title = 'eTuitionBD - About Us';
+  }, []);
     return (
         <div className="min-h-screen bg-gray-50 py-16 px-4">
             <div className="max-w-4xl mx-auto">

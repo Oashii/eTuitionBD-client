@@ -3,6 +3,9 @@ import axios from 'axios';
 import { AuthContext } from '../../provider/AuthProvider';
 
 const OngoingTuitions = () => {
+    useEffect(() => {
+    document.title = 'eTuitionBD - Ongoing Tuitions';
+  }, []);
     const { user } = useContext(AuthContext);
     const [tuitions, setTuitions] = useState([]);
     const [loading, setLoading] = useState(true);

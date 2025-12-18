@@ -3,6 +3,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const TutorProfile = () => {
+    useEffect(() => {
+    document.title = 'eTuitionBD - Tutor Profile';
+  }, []);
     const { id } = useParams();
     const navigate = useNavigate();
     const [tutor, setTutor] = useState(null);

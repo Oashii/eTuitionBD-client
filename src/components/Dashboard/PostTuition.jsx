@@ -1,9 +1,12 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../provider/AuthProvider';
 
 const PostTuition = () => {
+    useEffect(() => {
+    document.title = 'eTuitionBD - Post Tuition';
+  }, []);
     const navigate = useNavigate();
     const { user } = useContext(AuthContext);
     const [formData, setFormData] = useState({

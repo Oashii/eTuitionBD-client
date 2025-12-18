@@ -4,6 +4,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../provider/AuthProvider';
 
 const EditTuition = () => {
+    useEffect(() => {
+    document.title = 'eTuitionBD - Edit Tuition';
+  }, []);
     const { id } = useParams();
     const navigate = useNavigate();
     const { user } = useContext(AuthContext);

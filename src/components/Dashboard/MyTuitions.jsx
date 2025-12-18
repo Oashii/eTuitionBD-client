@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../../provider/AuthProvider';
 
 const MyTuitions = () => {
+    useEffect(() => {
+    document.title = 'eTuitionBD - My Tuitions';
+  }, []);
     const { user } = useContext(AuthContext);
     const [tuitions, setTuitions] = useState([]);
     const [loading, setLoading] = useState(true);

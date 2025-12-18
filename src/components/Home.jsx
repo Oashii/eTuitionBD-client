@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const Home = () => {
+    useEffect(() => {
+        document.title = 'eTuitionBD - Home';
+      }, []);
     const [latestTuitions, setLatestTuitions] = useState([]);
     const [latestTutors, setLatestTutors] = useState([]);
     const [loading, setLoading] = useState(true);

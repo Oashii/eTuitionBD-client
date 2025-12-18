@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 const UpdateProfile = () => {
 
   useEffect(() => {
-        document.title = 'GameHub - Update Profile';
+        document.title = 'eTuitionBD - Update Profile';
       }, []);
 
   const { user, updateUser, setUser } = use(AuthContext);

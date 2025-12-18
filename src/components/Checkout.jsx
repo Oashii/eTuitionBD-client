@@ -4,6 +4,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../provider/AuthProvider';
 
 const Checkout = () => {
+    useEffect(() => {
+    document.title = 'eTuitionBD - Checkout';
+  }, []);
     const { applicationId } = useParams();
     const navigate = useNavigate();
     const { user } = useContext(AuthContext);
