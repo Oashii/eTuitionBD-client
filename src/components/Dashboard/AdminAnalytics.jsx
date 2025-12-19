@@ -31,7 +31,10 @@ const AdminAnalytics = () => {
                     }),
                     axios.get('http://localhost:5000/api/admin/transactions', {
                         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-                    }).catch(() => ({ data: { transactions: [] } })),
+                    }).catch((error) => {
+                        console.error('Error fetching transactions:', error);
+                        return { data: { transactions: [] } };
+                    }),
                 ]);
 
                 const users = usersRes.data.users;
@@ -46,8 +49,8 @@ const AdminAnalytics = () => {
                 const pendingCount = tuitions.filter((t) => t.status === 'Pending').length;
                 const rejectedCount = tuitions.filter((t) => t.status === 'Rejected').length;
 
-                // Filter for successful transactions only
-                const successfulTransactions = transactions.filter((t) => t.status === 'Successful' || t.status === 'success');
+                // Filter for successful transactions only (status is 'Success' from server)
+                const successfulTransactions = transactions.filter((t) => t.status === 'Success' || t.status === 'Successful' || t.status === 'success');
                 const totalEarnings = successfulTransactions.reduce((sum, p) => sum + p.amount, 0);
 
                 setStats({
