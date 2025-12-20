@@ -59,7 +59,7 @@ const AuthProvider = ({ children }) => {
           
           // If we have a token, fetch user details from the server
           if (token) {
-            const response = await fetch('http://localhost:5000/api/auth/me', {
+            const response = await fetch('https://etuitionbd.vercel.app/api/auth/me', {
               headers: {
                 'Authorization': `Bearer ${token}`,
               },

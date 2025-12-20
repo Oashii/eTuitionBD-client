@@ -17,7 +17,7 @@ const MyTuitions = () => {
     useEffect(() => {
         const fetchTuitions = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/my-tuitions', {
+                const response = await axios.get('https://etuitionbd.vercel.app/api/my-tuitions', {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`,
                     },
@@ -39,7 +39,7 @@ const MyTuitions = () => {
     const confirmDelete = async () => {
         const id = deleteConfirm.tuitionId;
         try {
-            await axios.delete(`http://localhost:5000/api/tuitions/${id}`, {
+            await axios.delete(`https://etuitionbd.vercel.app/api/tuitions/${id}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },

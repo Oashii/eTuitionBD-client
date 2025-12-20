@@ -22,7 +22,7 @@ const MyApplications = () => {
     useEffect(() => {
         const fetchApplications = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/my-applications', {
+                const response = await axios.get('https://etuitionbd.vercel.app/api/my-applications', {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`,
                     },
@@ -44,7 +44,7 @@ const MyApplications = () => {
     const confirmDelete = async () => {
         const id = deleteConfirm.applicationId;
         try {
-            await axios.delete(`http://localhost:5000/api/applications/${id}`, {
+            await axios.delete(`https://etuitionbd.vercel.app/api/applications/${id}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
@@ -79,7 +79,7 @@ const MyApplications = () => {
     const handleEditSubmit = async (id) => {
         try {
             await axios.put(
-                `http://localhost:5000/api/applications/${id}`,
+                `https://etuitionbd.vercel.app/api/applications/${id}`,
                 editFormData,
                 {
                     headers: {

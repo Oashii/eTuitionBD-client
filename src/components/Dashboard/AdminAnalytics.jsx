@@ -23,13 +23,13 @@ const AdminAnalytics = () => {
         const fetchAnalytics = async () => {
             try {
                 const [usersRes, tuitionsRes, paymentsRes] = await Promise.all([
-                    axios.get('http://localhost:5000/api/admin/users', {
+                    axios.get('https://etuitionbd.vercel.app/api/admin/users', {
                         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
                     }),
-                    axios.get('http://localhost:5000/api/admin/tuitions', {
+                    axios.get('https://etuitionbd.vercel.app/api/admin/tuitions', {
                         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
                     }),
-                    axios.get('http://localhost:5000/api/admin/transactions', {
+                    axios.get('https://etuitionbd.vercel.app/api/admin/transactions', {
                         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
                     }).catch((error) => {
                         console.error('Error fetching transactions:', error);

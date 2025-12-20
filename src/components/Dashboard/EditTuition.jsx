@@ -24,7 +24,7 @@ const EditTuition = () => {
     useEffect(() => {
         const fetchTuition = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/tuitions/${id}`, {
+                const response = await axios.get(`https://etuitionbd.vercel.app/api/tuitions/${id}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`,
                     },
@@ -59,7 +59,7 @@ const EditTuition = () => {
 
         try {
             await axios.put(
-                `http://localhost:5000/api/tuitions/${id}`,
+                `https://etuitionbd.vercel.app/api/tuitions/${id}`,
                 formData,
                 {
                     headers: {

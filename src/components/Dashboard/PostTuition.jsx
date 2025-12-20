@@ -29,7 +29,7 @@ const PostTuition = () => {
         e.preventDefault();
         setSubmitting(true);
         try {
-            await axios.post('http://localhost:5000/api/tuitions', formData, {
+            await axios.post('https://etuitionbd.vercel.app/api/tuitions', formData, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },

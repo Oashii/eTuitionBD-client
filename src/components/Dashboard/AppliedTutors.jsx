@@ -18,7 +18,7 @@ const AppliedTutors = () => {
     useEffect(() => {
         const fetchTuitions = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/my-tuitions', {
+                const response = await axios.get('https://etuitionbd.vercel.app/api/my-tuitions', {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`,
                     },
@@ -41,7 +41,7 @@ const AppliedTutors = () => {
             const fetchApplications = async () => {
                 try {
                     const response = await axios.get(
-                        `http://localhost:5000/api/tuitions/${selectedTuition}/applications`,
+                        `https://etuitionbd.vercel.app/api/tuitions/${selectedTuition}/applications`,
                         {
                             headers: {
                                 Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -65,7 +65,7 @@ const AppliedTutors = () => {
             // Reject application directly
             try {
                 await axios.patch(
-                    `http://localhost:5000/api/applications/${applicationId}`,
+                    `https://etuitionbd.vercel.app/api/applications/${applicationId}`,
                     { status: newStatus },
                     {
                         headers: {

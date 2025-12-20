@@ -14,7 +14,7 @@ const TutorsList = () => {
     const fetchTutors = async (pageNum = 1) => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:5000/api/tutors', {
+            const response = await axios.get('https://etuitionbd.vercel.app/api/tutors', {
                 params: {
                     page: pageNum,
                     limit: 12,

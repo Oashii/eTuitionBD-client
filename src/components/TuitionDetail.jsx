@@ -24,7 +24,7 @@ const TuitionDetail = () => {
     useEffect(() => {
         const fetchTuition = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/tuitions/${id}`);
+                const response = await axios.get(`https://etuitionbd.vercel.app/api/tuitions/${id}`);
                 setTuition(response.data.tuition);
             } catch (error) {
                 console.error('Error fetching tuition:', error);
@@ -45,7 +45,7 @@ const TuitionDetail = () => {
         setSubmitting(true);
         try {
             await axios.post(
-                'http://localhost:5000/api/applications',
+                'https://etuitionbd.vercel.app/api/applications',
                 {
                     tuitionId: id,
                     ...formData,

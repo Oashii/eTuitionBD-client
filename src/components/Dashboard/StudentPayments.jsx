@@ -11,7 +11,7 @@ const StudentPayments = () => {
     useEffect(() => {
         const fetchPayments = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/my-payments', {
+                const response = await axios.get('https://etuitionbd.vercel.app/api/my-payments', {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`,
                     },

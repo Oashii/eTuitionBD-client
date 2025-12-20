@@ -14,7 +14,7 @@ const TutorProfile = () => {
     useEffect(() => {
         const fetchTutor = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/tutors/${id}`);
+                const response = await axios.get(`https://etuitionbd.vercel.app/api/tutors/${id}`);
                 setTutor(response.data.tutor);
             } catch (error) {
                 console.error('Error fetching tutor:', error);

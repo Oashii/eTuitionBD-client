@@ -32,7 +32,7 @@ const Checkout = () => {
                     try {
                         // Record the payment in the database
                         const response = await axios.get(
-                            `http://localhost:5000/api/applications/${appId}`,
+                            `https://etuitionbd.vercel.app/api/applications/${appId}`,
                             {
                                 headers: {
                                     Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -41,7 +41,7 @@ const Checkout = () => {
                         );
 
                         await axios.post(
-                            'http://localhost:5000/api/payments',
+                            'https://etuitionbd.vercel.app/api/payments',
                             {
                                 applicationId: appId,
                                 tutorId: tutorId,
@@ -77,7 +77,7 @@ const Checkout = () => {
         const fetchApplicationDetails = async () => {
             try {
                 const response = await axios.get(
-                    `http://localhost:5000/api/applications/${routeApplicationId}`,
+                    `https://etuitionbd.vercel.app/api/applications/${routeApplicationId}`,
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -92,7 +92,7 @@ const Checkout = () => {
                 console.log('Fetching tuition with ID:', tuitionId);
                 
                 const tuitionRes = await axios.get(
-                    `http://localhost:5000/api/tuitions/${tuitionId}`,
+                    `https://etuitionbd.vercel.app/api/tuitions/${tuitionId}`,
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -121,7 +121,7 @@ const Checkout = () => {
         try {
             // Create Stripe checkout session
             const response = await axios.post(
-                'http://localhost:5000/api/create-checkout-session',
+                'https://etuitionbd.vercel.app/api/create-checkout-session',
                 {
                     applicationId: routeApplicationId,
                     tutorId: application.tutorId,

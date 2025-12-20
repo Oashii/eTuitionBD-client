@@ -92,7 +92,7 @@ const Register = () => {
                 localStorage.setItem('token', token);
                 
                 // Save user profile to MongoDB via save-profile endpoint
-                const response = await fetch('http://localhost:5000/api/auth/save-profile', {
+                const response = await fetch('https://etuitionbd.vercel.app/api/auth/save-profile', {
                   method: 'POST',
                   headers: { 
                     'Content-Type': 'application/json',
@@ -172,7 +172,7 @@ const Register = () => {
       localStorage.setItem('token', firebaseToken);
       
       // Save Google user to MongoDB with default Student role
-      const response = await fetch('http://localhost:5000/api/auth/save-profile', {
+      const response = await fetch('https://etuitionbd.vercel.app/api/auth/save-profile', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',

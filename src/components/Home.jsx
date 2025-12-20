@@ -15,8 +15,8 @@ const Home = () => {
         const fetchData = async () => {
             try {
                 const [tutionsRes, tutorsRes] = await Promise.all([
-                    axios.get('http://localhost:5000/api/tuitions/latest/home'),
-                    axios.get('http://localhost:5000/api/tutors/latest'),
+                    axios.get('https://etuitionbd.vercel.app/api/tuitions/latest/home'),
+                    axios.get('https://etuitionbd.vercel.app/api/tutors/latest'),
                 ]);
                 setLatestTuitions(tutionsRes.data.tuitions || []);
                 setLatestTutors(tutorsRes.data.tutors || []);

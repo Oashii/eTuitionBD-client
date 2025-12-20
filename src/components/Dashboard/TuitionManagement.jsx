@@ -9,7 +9,7 @@ const TuitionManagement = () => {
     useEffect(() => {
         const fetchTuitions = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/admin/tuitions', {
+                const response = await axios.get('https://etuitionbd.vercel.app/api/admin/tuitions', {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`,
                     },
@@ -27,7 +27,7 @@ const TuitionManagement = () => {
     const handleApprove = async (id) => {
         try {
             await axios.patch(
-                `http://localhost:5000/api/admin/tuitions/${id}`,
+                `https://etuitionbd.vercel.app/api/admin/tuitions/${id}`,
                 { status: 'Approved' },
                 {
                     headers: {
@@ -49,7 +49,7 @@ const TuitionManagement = () => {
     const handleReject = async (id) => {
         try {
             await axios.patch(
-                `http://localhost:5000/api/admin/tuitions/${id}`,
+                `https://etuitionbd.vercel.app/api/admin/tuitions/${id}`,
                 { status: 'Rejected' },
                 {
                     headers: {

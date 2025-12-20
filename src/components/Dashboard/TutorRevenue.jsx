@@ -11,7 +11,7 @@ const TutorRevenue = () => {
     useEffect(() => {
         const fetchRevenue = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/tutor-revenue', {
+                const response = await axios.get('https://etuitionbd.vercel.app/api/tutor-revenue', {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`,
                     },

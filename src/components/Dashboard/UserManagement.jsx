@@ -20,7 +20,7 @@ const UserManagement = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/admin/users', {
+                const response = await axios.get('https://etuitionbd.vercel.app/api/admin/users', {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`,
                     },
@@ -42,7 +42,7 @@ const UserManagement = () => {
     const confirmDelete = async () => {
         const id = deleteConfirm.userId;
         try {
-            await axios.delete(`http://localhost:5000/api/admin/users/${id}`, {
+            await axios.delete(`https://etuitionbd.vercel.app/api/admin/users/${id}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
@@ -86,7 +86,7 @@ const UserManagement = () => {
     const handleEditSubmit = async () => {
         try {
             await axios.put(
-                `http://localhost:5000/api/admin/users/${selectedUser._id}`,
+                `https://etuitionbd.vercel.app/api/admin/users/${selectedUser._id}`,
                 editFormData,
                 {
                     headers: {
@@ -112,7 +112,7 @@ const UserManagement = () => {
     const handleRoleChange = async (id, newRole) => {
         try {
             await axios.put(
-                `http://localhost:5000/api/admin/users/${id}`,
+                `https://etuitionbd.vercel.app/api/admin/users/${id}`,
                 { role: newRole },
                 {
                     headers: {

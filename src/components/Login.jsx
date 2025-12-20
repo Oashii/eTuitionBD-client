@@ -25,7 +25,7 @@ const Login = () => {
       const user = result.user;
       
       // Call backend to get JWT token and user role
-      const response = await fetch('http://localhost:5000/api/auth/firebase-login', {
+      const response = await fetch('https://etuitionbd.vercel.app/api/auth/firebase-login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ const Login = () => {
       const user = result.user;
       
       // Call backend to get JWT token
-      const response = await fetch('http://localhost:5000/api/auth/firebase-login', {
+      const response = await fetch('https://etuitionbd.vercel.app/api/auth/firebase-login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

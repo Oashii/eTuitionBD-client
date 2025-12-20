@@ -39,7 +39,7 @@ const TuitionsList = () => {
             if (currentFilters.location) params.location = currentFilters.location;
             if (currentFilters.class) params.class = currentFilters.class;
 
-            const response = await axios.get('http://localhost:5000/api/tuitions', { params });
+            const response = await axios.get('https://etuitionbd.vercel.app/api/tuitions', { params });
             setTuitions(response.data.tuitions);
             setTotalPages(response.data.pagination.pages);
             setPage(pageNum);
