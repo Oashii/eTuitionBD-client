@@ -8,7 +8,7 @@
 
 ### Live URL
 
-- https://spontaneous-beijinho-77cde9.netlify.app/
+- https://e-tuition-b-d.netlify.app/
 
 ### Key Features
 

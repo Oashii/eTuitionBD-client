@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { AuthContext } from '../provider/AuthProvider';
 import { toast } from 'react-toastify';
 
@@ -16,7 +16,6 @@ const Checkout = () => {
     const [loading, setLoading] = useState(true);
     const [processing, setProcessing] = useState(false);
     const paymentProcessedRef = useRef(false);
-
     useEffect(() => {
         const checkPaymentSuccess = async () => {
             // Check if this is a return from Stripe payment
@@ -136,8 +135,11 @@ const Checkout = () => {
             );
 
             // Redirect to Stripe checkout
+            
             if (response.data.url) {
                 window.location.href = response.data.url;
+                 
+                console.log('Redirecting to Stripe checkout:', response.data.url);
             } else {
                 throw new Error('No checkout URL returned');
             }

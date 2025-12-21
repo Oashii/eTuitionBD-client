@@ -98,6 +98,7 @@ const Register = () => {
                     name,
                     email,
                     profileImage: photoUrl,
+                    role,
                   }),
                 });
                 
